@@ -92,6 +92,7 @@ h3 {
 }
 
 .menu-link {
+  position: relative;
   display: block;
   font-weight: 500;
   font-size: 14px;
@@ -102,6 +103,21 @@ h3 {
   padding-bottom: 32px;
 
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.menu-link.current::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background-color: var(--accent-color);
+  border-radius: 2px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.menu-link:hover::after {
+  display: block;
 }
 
 .menu-item {
@@ -158,15 +174,16 @@ h3 {
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .menu-link:hover,
-.menu-link:focus {
+.menu-link:focus,
+.current {
   color: var(--accent-color);
 }
 
 .contact-mail:hover,
-.contact-mail:focus,
-.current {
+.contact-mail:focus {
   color: var(--accent-color);
 }
+
 .contact-number-phone:hover,
 .contact-number-phone:focus {
   color: var(--accent-color);
@@ -239,6 +256,57 @@ h3 {
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
+.backdrop.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.backdrop.is-hidden .modal {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.2);
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  min-height: 581px;
+  min-width: 528px;
+
+  background: #ffffff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+.button-close {
+  display: flex;
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  top: 8px;
+  right: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.icon-close-modal {
+  fill: #000;
+}
 
 /* ========SERVICES======= */
 .services-section {
@@ -284,6 +352,7 @@ h3 {
   width: 370px;
   margin-right: 30px;
 }
+
 .services-element:last-child {
   margin-right: 0;
 }
@@ -307,6 +376,32 @@ h3 {
   letter-spacing: 0.03em;
   color: var(--secondary-text-color-theme-dark);
   width: 270px;
+}
+
+.thumb {
+  position: relative;
+}
+.image-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: inherit;
+  height: 70px;
+  background-color: rgba(47, 48, 58, 0.8);
+}
+.image-name-title {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.14;
+  text-align: center;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+
+  color: #ffffff;
 }
 
 /* ========TEAM======= */
@@ -480,7 +575,7 @@ h3 {
 .footer-item:not(:last-child) {
   margin-bottom: 9px;
 }
-.footer-third-title {
+.third-title {
   font-weight: 700;
   font-size: 14px;
   line-height: 1.14;
@@ -582,6 +677,49 @@ h3 {
 .portfolio-element:focus {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
     1px 4px 6px rgba(0, 0, 0, 0.16);
+}
+
+.portfolio-overlay {
+  overflow: hidden;
+  position: relative;
+}
+.overlay-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(33, 150, 243, 0.9);
+
+  transform: translateY(100%);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.portfolio-element:hover .overlay-wrapper {
+  transform: translateY(0);
+}
+
+.portfolio-overlay:hover::before {
+  opacity: 1;
+}
+.portfolio-overlay-contents:hover {
+  opacity: 1;
+}
+.portfolio-overlay-contents {
+  min-width: 322px;
+  min-height: 168px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.portfolio-overlay-description {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.56;
+  letter-spacing: 0.03em;
+  color: var(--primary-text-color-theme-light);
 }
 
 .portfolio-element:nth-child(3n) {
